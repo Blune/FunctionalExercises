@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Chapter1.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class Chapter1Tests
     {
         // 1. Write a function that negates a given predicate: whenvever the given predicate
         // evaluates to `true`, the resulting function evaluates to `false`, and vice versa.
