@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Chapter3;
+using System.Collections.Specialized;
 using LaYumba.Functional;
 using NUnit.Framework;
 
-namespace Tests
+namespace Chapter3.Test
 {
     public class Tests
     {
@@ -36,19 +36,19 @@ namespace Tests
         // new List<int>().Lookup(isOdd) // => None
         // new List<int> { 1 }.Lookup(isOdd) // => Some(1)
 
-        private bool isOdd(int i) => i % 2 == 1;
+        private static bool IsOdd(int i) => i % 2 == 1;
 
         [Test]
         public void LookupInListWithNoResult()
         {
-            var result = new List<int>().Lookup(isOdd);
+            var result = new List<int>().Lookup(IsOdd);
             Assert.AreEqual(F.None, result);
         }
 
         [Test]
         public void LookupInListWithResult()
         {
-            var result = new List<int> { 1 }.Lookup(isOdd);
+            var result = new List<int> { 1 }.Lookup(IsOdd);
             Assert.AreEqual(F.Some(1), result);
         }
 
@@ -58,15 +58,48 @@ namespace Tests
         // - Implicit conversion to string, so that it can easily be used with the typical API
         // for sending emails
 
+        [Test]
+        public void ValidateAValidEmail()
+        {
+            var email = Email.Create("justatest@test.com");
+            var test = email.Match(() => "invalid Email", x => x);
+
+            Assert.AreEqual("justatest@test.com", test);
+        }
+
+        [Test]
+        public void ValidateAnInvalideEmail()
+        {
+            var email = Email.Create("?@test.com");
+            var test = email.Match(() => "invalid Email", x => x);
+
+            Assert.AreEqual("invalid Email", test);
+        }
+
         // 4 Take a look at the extension methods defined on IEnumerable inSystem.LINQ.Enumerable.
         // Which ones could potentially return nothing, or throw some
         // kind of not-found exception, and would therefore be good candidates for
         // returning an Option<T> instead?
+
+        // Single() || First() 
+        // but preferred without exception SingleOrDefault()
 
         // 5.  Write implementations for the methods in the `AppConfig` class
         // below. (For both methods, a reasonable one-line method body is possible.
         // Assume settings are of type string, numeric or date.) Can this
         // implementation help you to test code that relies on settings in a
         // `.config` file?
+
+        [Test]
+        public void AppConfigTest()
+        {
+            var settings = new NameValueCollection() { { "MySetting", "Everything should work" } };
+            var appConfigHelper = new AppConfigExtension(settings);
+            var mySetting = appConfigHelper
+                                .Get<string>("MySetting")
+                                .Match(() => "NotFound", setting => setting);
+
+            Assert.AreEqual("Everything should work", mySetting);
+        }
     }
 }
