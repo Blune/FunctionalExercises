@@ -91,7 +91,7 @@ namespace Chapter3.Test
         // `.config` file?
 
         [Test]
-        public void AppConfigTest()
+        public void AppConfigWithExistingSettingTest()
         {
             var settings = new NameValueCollection() { { "MySetting", "Everything should work" } };
             var appConfigHelper = new AppConfigExtension(settings);
@@ -100,6 +100,18 @@ namespace Chapter3.Test
                                 .Match(() => "NotFound", setting => setting);
 
             Assert.AreEqual("Everything should work", mySetting);
+        }
+
+        [Test]
+        public void AppConfigWithNonExistingSettingTest()
+        {
+            var settings = new NameValueCollection() { { "MySetting", "Everything should work" } };
+            var appConfigHelper = new AppConfigExtension(settings);
+            var mySetting = appConfigHelper
+                .Get<string>("Not existing")
+                .Match(() => "NotFound", setting => setting);
+
+            Assert.AreEqual("NotFound", mySetting);
         }
     }
 }
