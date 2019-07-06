@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Chapter4;
 using LaYumba.Functional;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Tests
 {
@@ -72,30 +73,91 @@ namespace Tests
         // 3 Use Bind and an Option-returning Lookup function (such as the one we defined
         // in chapter 3) to implement GetWorkPermit, shown below. 
 
-        // Then enrich the implementation so that `GetWorkPermit`
-        // returns `None` if the work permit has expired.
-
         static Option<WorkPermit> GetWorkPermit(Dictionary<string, Employee> people, string employeeId)
         {
-            return people.Lookup(x => x == employeeId).Bind(x => x.WorkPermit);
-            //return people.Bind(x =>
-            //    Lookup(x, y => y == employeeId)).Match(() => F.None, employee => employee.WorkPermit);
+            return people.Lookup(x => x == employeeId)
+                .Bind(x => x.WorkPermit);
         }
 
         [Test]
         public void TestGetWorkPermit()
         {
+            var validWorkPermit = new WorkPermit()
+            {
+                Expiry = DateTime.Now.AddDays(5)
+            };
+
             var dict = new Dictionary<string, Employee>
             {
                 ["Manuel"] = new Employee
                 {
                     Id = "Manuel",
-                    WorkPermit = F.Some(new WorkPermit())
+                    WorkPermit = F.Some(validWorkPermit)
                 }
             };
 
             var workPermit = GetWorkPermit(dict, "Manuel");
-            Assert.AreEqual(F.Some(new WorkPermit()), workPermit);
+            Assert.AreEqual(F.Some(validWorkPermit), workPermit);
+        }
+
+        [Test]
+        public void TestGetNotExistingWorkPermit()
+        {
+            var validWorkPermit = new WorkPermit()
+            {
+                Expiry = DateTime.Now.AddDays(5)
+            };
+
+            var dict = new Dictionary<string, Employee>
+            {
+                ["Manuel"] = new Employee
+                {
+                    Id = "Manuel",
+                    WorkPermit = F.Some(validWorkPermit)
+                }
+            };
+
+            var workPermit = GetWorkPermit(dict, "Yegor");
+            Assert.AreEqual(F.None, workPermit);
+        }
+        // Then enrich the implementation so that `GetWorkPermit`
+        // returns `None` if the work permit has expired.
+
+        static Option<WorkPermit> GetWorkPermit(Dictionary<string, Employee> people, string employeeId, Predicate<WorkPermit> isValidWorkPermit)
+        {
+            return people.Lookup(x => x == employeeId)
+                .Bind(x => x.WorkPermit)
+                .Bind(wp => isValidWorkPermit(wp) ? F.Some(wp) : F.None);
+        }
+        [Test]
+        public void TestGetWorkPermitWithValidity()
+        {
+            var validWorkPermit = new WorkPermit()
+            {
+                Expiry = DateTime.Today.AddDays(7)
+            };
+
+            var dict = new Dictionary<string, Employee>
+            {
+                ["Manuel"] = new Employee
+                {
+                    Id = "Manuel",
+                    WorkPermit = F.Some(validWorkPermit)
+                }
+            };
+
+            var workPermit = GetWorkPermit(dict, "Manuel", x => x.Expiry > DateTime.Today);
+            Assert.AreEqual(F.Some(validWorkPermit), workPermit);
+        }
+
+        // 4 Use Bind to implement AverageYearsWorkedAtTheCompany, shown below (only
+        // employees who have left should be included).
+
+        static double AverageYearsWorkedAtTheCompany(List<Employee> employees)
+        {
+            return employees
+                .Bind(x => x.LeftOn.Map(leaveDate => (leaveDate - x.JoinedOn).Days / 365))
+                .Average();
         }
     }
 
@@ -110,11 +172,6 @@ namespace Tests
         {
             return option.Match(() => F.None, x => F.Some(map(x)));
         }
-
-        //internal static Option<Employee> Bind<T, T1>(this Dictionary<string, Employee> people, Func<string, Option<Employee>> lookup)
-        //{
-        //    return null;
-        //}
 
         public static Option<Employee> Lookup(this Dictionary<string, Employee> dict, Predicate<string> predicate)
         {
