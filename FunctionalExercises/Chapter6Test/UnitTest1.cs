@@ -22,7 +22,10 @@ namespace Tests
             return option.Match<Either<L, R>>(() => leftOperation(), right => right);
         }
 
-
+        public static Option<T1> MyBind<T, T1>(this Either<T, T1> either, Func<T1, Option<T1>> f)
+        {
+            return either.Match(x => F.None, f);
+        }
     }
 
     public class Tests
@@ -194,14 +197,6 @@ namespace Tests
                     x => $"The value in the array is {x}");
 
             Assert.AreEqual("The value in the array is 2", test);
-        }
-    }
-
-    internal static class Chapter6Extension
-    {
-        public static Option<T1> MyBind<T, T1>(this Either<T, T1> either, Func<T1, Option<T1>> f)
-        {
-            return either.Match(x => F.None, f);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter 2", "Chapter 2", "{21129C27-030E-4239-B7F3-99FE425376A7}"
 EndProject
@@ -27,13 +27,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter4", "Chapter4\Chapte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter 5", "Chapter 5", "{3FFA13D6-6C01-4E61-A18D-6D055ACAA761}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter5", "Chapter5\Chapter5.csproj", "{9C6F9336-3C14-4B58-910E-40D8D99FED82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter5", "Chapter5\Chapter5.csproj", "{9C6F9336-3C14-4B58-910E-40D8D99FED82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter 6", "Chapter 6", "{6A6079D2-6A9C-4FD5-ADA0-D478D0FC3700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter6", "Chapter6\Chapter6.csproj", "{8AD30505-3CEE-47A1-8359-1B7E6F97215C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter6", "Chapter6\Chapter6.csproj", "{8AD30505-3CEE-47A1-8359-1B7E6F97215C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter6Test", "Chapter6Test\Chapter6Test.csproj", "{7B0B7B29-E9CF-40B4-A78D-BC6B94801A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chapter6Test", "Chapter6Test\Chapter6Test.csproj", "{7B0B7B29-E9CF-40B4-A78D-BC6B94801A92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter 7", "Chapter 7", "{CA233C46-016D-47B7-AA46-293598D6DBAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter7.Test", "Chapter7.Test\Chapter7.Test.csproj", "{36389D16-CD5C-4E1C-9BB7-1849A649F319}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,10 @@ Global
 		{7B0B7B29-E9CF-40B4-A78D-BC6B94801A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B0B7B29-E9CF-40B4-A78D-BC6B94801A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B0B7B29-E9CF-40B4-A78D-BC6B94801A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36389D16-CD5C-4E1C-9BB7-1849A649F319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36389D16-CD5C-4E1C-9BB7-1849A649F319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36389D16-CD5C-4E1C-9BB7-1849A649F319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36389D16-CD5C-4E1C-9BB7-1849A649F319}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +104,7 @@ Global
 		{9C6F9336-3C14-4B58-910E-40D8D99FED82} = {3FFA13D6-6C01-4E61-A18D-6D055ACAA761}
 		{8AD30505-3CEE-47A1-8359-1B7E6F97215C} = {6A6079D2-6A9C-4FD5-ADA0-D478D0FC3700}
 		{7B0B7B29-E9CF-40B4-A78D-BC6B94801A92} = {6A6079D2-6A9C-4FD5-ADA0-D478D0FC3700}
+		{36389D16-CD5C-4E1C-9BB7-1849A649F319} = {CA233C46-016D-47B7-AA46-293598D6DBAC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D29C8AC-C26F-47FC-A128-5DB7A2D9AA3C}
